@@ -1,16 +1,16 @@
 
-
+import './App.css';
 import CheckoutPage from './components/CheckoutPage';
 import Gamelist from './components/Gamelist';
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Login from './components/Login';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
-    <div>
+    <div className="App">
      <Router>
         <Routes>
-          <Route exact path="/" element={<Login/>} />
+          <Route exact path="/" element={<Gamelist />} />
           <Route exact path="/checkout" element={<CheckoutPage />} />
         </Routes>
       </Router>
