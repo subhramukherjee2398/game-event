@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     console.log(data);
@@ -32,6 +34,7 @@ function Login() {
           {errors.password && <p>This field is required</p>}
         </div>
         <button type="submit">Login</button>
+        
       </form>
     </>
   );
