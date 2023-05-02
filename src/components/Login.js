@@ -34,7 +34,7 @@ function Login() {
           {errors.password && <p>This field is required</p>}
         </div>
         <button type="submit">Login</button>
-        
+        <button onClick={()=>navigate('/registration')}> Signin</button>
       </form>
     </>
   );

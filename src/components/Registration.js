@@ -1,21 +1,27 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 
 function Registration() {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const { register, handleSubmit, reset,formState: { errors } } = useForm();
+  const [newUser,setnewUser] = useState([])
 
   const onSubmit = (data) => {
-    console.log(data);
+    reset();
+    setnewUser([...newUser,{id:uuidv4(),data}])
+
   };
 
   return (
     <>
       <h1>Registration Form</h1>
+      {console.log(newUser)}
       <form onSubmit={handleSubmit(onSubmit)}>
       <div className="row">
-          <label htmlFor="email">Username</label>
+          <label htmlFor="username">Username</label>
           <input
-            type="email"
-            name="email"
+            type="text"
+            name="username"
             autoComplete="off"
             placeholder="username"
             {...register("username", { required: true })}
