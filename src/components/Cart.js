@@ -5,11 +5,10 @@ import './style.css';
 
 function Cart({product,AddtoCart}) {
   return (
-    <div className="cart">
-      <img src={product.image} alt={product.name} />
-      <h3>{product.name}</h3>
-      <p>${product.price}</p>
-      <button onClick={()=>AddtoCart(product)}>Add to Cart</button>
+    <div className="product">
+            <img src={product.image} alt='game' />
+            <h1>Metin2 Refine Window</h1>
+            <div className="price">Add to Cart</div>
     </div>
   );
 }

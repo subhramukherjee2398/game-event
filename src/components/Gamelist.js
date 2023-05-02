@@ -11,34 +11,35 @@ const Gamelist = () => {
       id: 1,
       name: "Hi Stricker",
       price: 10.99,
-      image: "product1.jpg",
+      image: "https://i.imgur.com/WwkgPd5.jpg",
     },
     {
       id: 2,
       name: " Puch Challange",
       price: 14.99,
-      image: "product2.jpg",
+      image: "https://i.imgur.com/WwkgPd5.jpg",
     },
     {
       id: 3,
       name: "Bow & Arrow",
       price: 12.99,
-      image: "product3.jpg",
+      image: "https://i.imgur.com/WwkgPd5.jpg",
     },
     {
       id: 4,
       name: "Catch Fish",
       price: 8.99,
-      image: "product4.jpg",
+      image: "https://i.imgur.com/WwkgPd5.jpg",
     },
   ];
 
   const AddtoCart = (product) => {
-    setAddgame([...addGame,product])
+    setAddgame([...addGame, product]);
   };
 
   return (
-    <div>
+    <>
+      {/* <div>
         {console.log(addGame,'addgame')}
       <div>
         <button onClick={()=>navigate('/checkout')}>Total Games{addGame.length}</button>
@@ -46,7 +47,15 @@ const Gamelist = () => {
       {products.map((product) => (
         <Cart product={product} AddtoCart={AddtoCart} />
       ))}
-    </div>
+    </div> */}
+      <div>
+        <div className="products">
+        {products.map((product) => (
+        <Cart product={product} AddtoCart={AddtoCart} />
+      ))}
+          </div>
+      </div>
+    </>
   );
 };
 
