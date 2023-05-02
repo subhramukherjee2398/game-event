@@ -48,12 +48,17 @@ const Gamelist = () => {
         <Cart product={product} AddtoCart={AddtoCart} />
       ))}
     </div> */}
+      <div class="cart" onClick={()=>navigate('/checkout')}>
+        <span class="count">{addGame.length}</span>
+        {/*   <span class="count">1</span> */}
+        <i class="material-icons">shopping_cart</i>
+      </div>
       <div>
         <div className="products">
-        {products.map((product) => (
-        <Cart product={product} AddtoCart={AddtoCart} />
-      ))}
-          </div>
+          {products.map((product) => (
+            <Cart product={product} AddtoCart={AddtoCart} />
+          ))}
+        </div>
       </div>
     </>
   );
