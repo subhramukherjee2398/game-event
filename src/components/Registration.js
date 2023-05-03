@@ -6,14 +6,14 @@ function Registration() {
   const { register, handleSubmit, reset,formState: { errors } } = useForm();
   const [newUser,setnewUser] = useState([])
 
-  const onSubmit = (data) => {
+  const onSubmit = ({username,email,password}) => {
     reset();
-    setnewUser([...newUser,{id:uuidv4(),data}])
+    setnewUser([...newUser,{id:uuidv4(),username,email,password}])
 
   };
 
   return (
-    <>
+    <div className="checkoutPage">
       <h1>Registration Form</h1>
       {console.log(newUser)}
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -50,7 +50,7 @@ function Registration() {
         </div>
         <button type="submit">Login</button>
       </form>
-    </>
+    </div>
   );
 }
 

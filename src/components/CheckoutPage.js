@@ -95,15 +95,13 @@ const CheckoutPage = () => {
   };
 
   return (
-    <div>
+    <div className="event-conatiner">
       <h2>{eventDuration !== "" && eventDuration}</h2>
-      <div>
-        <div>Event start Date</div>
+      <section className="eventDates">
         <div>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <MobileDateTimePicker
-              // renderInput={(props) => <TextField {...props} />}
-              label="Start Time"
+              label="Event Start Time"
               value={eventStart}
               onChange={(newValue) => {
                 setEventStart(newValue?.toISOString());
@@ -111,12 +109,11 @@ const CheckoutPage = () => {
             />
           </LocalizationProvider>
         </div>
-        <div>Event End Date</div>
         <div>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <MobileDateTimePicker
               value={eventEnd}
-              label="End Time"
+              label="Event End Time"
               minDateTime={dayjs(customEventEnd(eventStart))}
               onChange={(newValue) => {
                 setEventEnd(newValue?.toISOString());
@@ -124,34 +121,58 @@ const CheckoutPage = () => {
             />
           </LocalizationProvider>
         </div>
-      </div>
-      <div>Set up Date</div>
-      <div>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <MobileDateTimePicker
-            value={setuptime}
-            label="Set time"
-            minDateTime={dayjs(eventStart)}
-            maxDateTime={dayjs(eventEnd)}
-            onChange={(newValue) => {
-              setSettimeup(newValue?.toISOString());
-            }}
-          />
-        </LocalizationProvider>
-      </div>
-      {console.log(transPrice)}
-      <div>Transport Price - {transPrice}</div>
-      <div>
-        <select value={selectedOption} onChange={handleChange}>
-          <option value="">Select an option</option>
-          {options.map((option) => (
-            <option key={option.Id} value={option.Distance}>
-              {option.name}
-            </option>
-          ))}
+      </section>
+      <section className="setupContainer">
+        <div>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <MobileDateTimePicker
+              value={setuptime}
+              label="Set time"
+              minDateTime={dayjs(eventStart)}
+              maxDateTime={dayjs(eventEnd)}
+              onChange={(newValue) => {
+                setSettimeup(newValue?.toISOString());
+              }}
+            />
+          </LocalizationProvider>
+        </div>
+      </section>
+
+      <section className="userloc">
+        <div>
+          <select value={selectedOption} onChange={handleChange} className="dis">
+            <option value="">Select an option</option>
+            {options.map((option) => (
+              <option key={option.Id} value={option.Distance}>
+                {option.name}
+              </option>
+            ))}
+          </select>
+        </div>
+      </section>
+
+      <section className="payment">
+        
+
+        <select name="pay" id="pay" className="pay">
+        <option value="">Select payment option</option>
+          <option value="UPI">UPI</option>
+          <option value="COD">COD</option>
+          <option value="Cheque">Cheque</option>
+          <option value="Others">Others</option>
         </select>
-        <p>Selected option: {selectedOption}</p>
-      </div>
+      </section>
+
+      <section className="shipping">
+         <h4>Shipping Cost(Transport Cost) : {transPrice}</h4>
+      </section>
+
+      <section className="paybtn">
+         <button>Pay</button>
+      </section>
+
+      {/* {console.log(transPrice)}
+      <div>Transport Price - {transPrice}</div> */}
     </div>
   );
 };
