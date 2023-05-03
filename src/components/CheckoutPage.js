@@ -40,11 +40,14 @@ const CheckoutPage = () => {
   useEffect(() => {
     let items = JSON.parse(localStorage.getItem("purchas"));
     setPurchasItem(items);
-    let totalPrice = items.reduce((acc, curr) => {
-      return acc + curr.price;
-    }, 0);
-    setTotalPrice(totalPrice);
-    console.warn(totalPrice);
+
+    if (items?.length > 0) {
+      let totalPrice = items.reduce((acc, curr) => {
+        return acc + curr.price;
+      }, 0);
+      setTotalPrice(totalPrice);
+      console.warn(totalPrice);
+    }
   }, []);
 
   const customEventEnd = (time) => {

@@ -19,7 +19,7 @@ function Registration() {
   }, [newUser]);
 
   const onSubmit = ({ username, email, password }) => {
-    //reset();
+    reset();
     setnewUser([
       ...newUser,
       { id: uuidv4().slice(0, 8), username, email, password },
@@ -71,7 +71,7 @@ function Registration() {
           )}
         </div>
         <button type="submit">Create Account</button>
-        <button type="submit">Login</button>
+        <button onClick={()=>navigate("/")}>Login</button>
       </form>
     </div>
   );

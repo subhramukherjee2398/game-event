@@ -6,12 +6,14 @@ function Login() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
   const [userlist,setUserlist] = useState([])
+  const [islogin,setIslogin] = useState(false)
 
   useEffect(()=>{
     console.log()
    let userData = JSON.parse(localStorage.getItem('userlist'));
    console.log(userData)
    setUserlist(userData)
+   
   },[])
 
   const onSubmit = (data) => {
@@ -22,6 +24,8 @@ function Login() {
     }) 
 
     if(islogin){
+      setIslogin(true)
+      localStorage.setItem('islogin',true)
       navigate('/gamelist')
     }else{
          alert('Please check your email and password')

@@ -1,4 +1,4 @@
-
+/* 
 import './App.css';
 import CheckoutPage from './components/CheckoutPage';
 import Gamelist from './components/Gamelist';
@@ -21,3 +21,4 @@ function App() {
 }
 
 export default App;
+ */
