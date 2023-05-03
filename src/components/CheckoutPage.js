@@ -3,7 +3,7 @@ import { DateTimePicker, MobileDateTimePicker } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dayjs from "dayjs";
-import Select from "react-dropdown-select";
+import { useNavigate } from "react-router-dom";
 
 const CheckoutPage = () => {
   const [eventStart, setEventStart] = useState("");
@@ -12,6 +12,10 @@ const CheckoutPage = () => {
   const [eventDuration, setEventDuration] = useState("");
   const [transPrice, setTransPrice] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
+  const [paymentOption, setPaymentOption] = useState("");
+  const [totalPrice,setTotalPrice] = useState(0)
+  const [purchasItem,setPurchasItem] = useState([])
+  const navigate = useNavigate();
 
   useEffect(() => {
     const isoDateString1 = eventStart;
@@ -32,6 +36,20 @@ const CheckoutPage = () => {
       `${timeDiffInHours} hours is equivalent to ${days} days and ${remainingHours} hours.`
     );
   }, [eventStart, eventEnd]);
+
+  useEffect(()=>{
+    let items = JSON.parse(localStorage.getItem('purchas'));
+    setPurchasItem(items)
+     let totalPrice = items.reduce((acc,curr)=>{
+       return acc + curr.price
+     },0)
+     setTotalPrice(totalPrice)
+     console.warn(totalPrice)
+  },[])
+
+  
+
+
 
   const customEventEnd = (time) => {
     if (time) {
@@ -94,9 +112,33 @@ const CheckoutPage = () => {
     }
   };
 
+  const handleChangePay = (event) => {
+    console.log(event.target.value);
+    setPaymentOption(event.target.value);
+  };
+
+  const PayemntData = () => {
+    let paymentData = {
+      event_start: new Date(eventStart).toLocaleDateString(),
+      event_end: new Date(eventEnd).toLocaleDateString(),
+      setuptime: new Date(setuptime).toLocaleDateString(),
+      eventDuration,
+      transportPrice: transPrice,
+      paymentOption,
+    };
+
+    console.table(paymentData);
+  };
+
   return (
     <div className="event-conatiner">
-      <h2>{eventDuration !== "" && eventDuration}</h2>
+      <h4 style={{color:'#BFDB38'}}>
+        {eventDuration !== "" &&
+          eventStart !== "" &&
+          eventEnd !== "" &&
+          eventDuration}
+      </h4>
+      <h4>Event Timimg</h4>
       <section className="eventDates">
         <div>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -122,6 +164,7 @@ const CheckoutPage = () => {
           </LocalizationProvider>
         </div>
       </section>
+      <h4>Set Up Timimg</h4>
       <section className="setupContainer">
         <div>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -138,9 +181,14 @@ const CheckoutPage = () => {
         </div>
       </section>
 
+      <h4>Choose Your Location</h4>
       <section className="userloc">
         <div>
-          <select value={selectedOption} onChange={handleChange} className="dis">
+          <select
+            value={selectedOption}
+            onChange={handleChange}
+            className="dis"
+          >
             <option value="">Select an option</option>
             {options.map((option) => (
               <option key={option.Id} value={option.Distance}>
@@ -151,11 +199,10 @@ const CheckoutPage = () => {
         </div>
       </section>
 
+      <h4>Choose payment option</h4>
       <section className="payment">
-        
-
-        <select name="pay" id="pay" className="pay">
-        <option value="">Select payment option</option>
+        <select name="pay" id="pay" className="pay" onChange={handleChangePay}>
+          <option value="">Select payment option</option>
           <option value="UPI">UPI</option>
           <option value="COD">COD</option>
           <option value="Cheque">Cheque</option>
@@ -164,12 +211,19 @@ const CheckoutPage = () => {
       </section>
 
       <section className="shipping">
-         <h4>Shipping Cost(Transport Cost) : {transPrice}</h4>
+        {transPrice > 0 && (
+          <h4>Shipping Cost(Transport Cost) : {transPrice}</h4>
+        )}
       </section>
 
       <section className="paybtn">
-         <button>Pay</button>
+        <button onClick={() => PayemntData()}>Pay ${totalPrice} ({purchasItem.length} item )</button>
       </section>
+
+      <section className="paybtn">
+        <button style={{backgroundColor:'lightgray',color:'black'}} onClick={() => navigate('/gamelist')}>Back to Games</button>
+      </section>
+
 
       {/* {console.log(transPrice)}
       <div>Transport Price - {transPrice}</div> */}

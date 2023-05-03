@@ -5,7 +5,8 @@ function Cart({ product, AddtoCart }) {
   return (
     <div className="product">
       <img src={product.image} alt="game" />
-      <h1>Metin2 Refine Window</h1>
+      <p>{product.name}</p>
+      <p>${product.price}</p>
       <div className="price" onClick={() => AddtoCart(product)}>
         Add to Cart
       </div>

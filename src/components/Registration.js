@@ -1,23 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 
 function Registration() {
-  const { register, handleSubmit, reset,formState: { errors } } = useForm();
-  const [newUser,setnewUser] = useState([])
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const [newUser, setnewUser] = useState([]);
+  const navigate = useNavigate();
 
-  const onSubmit = ({username,email,password}) => {
-    reset();
-    setnewUser([...newUser,{id:uuidv4(),username,email,password}])
+  useEffect(() => {
+    console.log(newUser);
+    localStorage.setItem("userlist", JSON.stringify(newUser));
+  }, [newUser]);
 
+  const onSubmit = ({ username, email, password }) => {
+    //reset();
+    setnewUser([
+      ...newUser,
+      { id: uuidv4().slice(0, 8), username, email, password },
+    ]);
+    alert("account create successfully");
+    //navigate("/");
   };
 
   return (
     <div className="checkoutPage">
-      <h1>Registration Form</h1>
       {console.log(newUser)}
+      <h1>Registration Form</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="row">
+        <div className="row">
           <label htmlFor="username">Username</label>
           <input
             type="text"
@@ -26,7 +42,9 @@ function Registration() {
             placeholder="username"
             {...register("username", { required: true })}
           />
-          {errors.username && <p>This field is required</p>}
+          {errors.username && (
+            <p style={{ color: "red" }}>This field is required</p>
+          )}
         </div>
         <div className="row">
           <label htmlFor="email">Email</label>
@@ -37,7 +55,9 @@ function Registration() {
             placeholder="email@example.com"
             {...register("email", { required: true })}
           />
-          {errors.email && <p>This field is required</p>}
+          {errors.email && (
+            <p style={{ color: "red" }}>This field is required</p>
+          )}
         </div>
         <div className="row">
           <label htmlFor="password">Password</label>
@@ -46,8 +66,11 @@ function Registration() {
             name="password"
             {...register("password", { required: true })}
           />
-          {errors.password && <p>This field is required</p>}
+          {errors.password && (
+            <p style={{ color: "red" }}>This field is required</p>
+          )}
         </div>
+        <button type="submit">Create Account</button>
         <button type="submit">Login</button>
       </form>
     </div>
