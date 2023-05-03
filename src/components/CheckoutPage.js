@@ -13,8 +13,8 @@ const CheckoutPage = () => {
   const [transPrice, setTransPrice] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
   const [paymentOption, setPaymentOption] = useState("");
-  const [totalPrice,setTotalPrice] = useState(0)
-  const [purchasItem,setPurchasItem] = useState([])
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [purchasItem, setPurchasItem] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,19 +37,15 @@ const CheckoutPage = () => {
     );
   }, [eventStart, eventEnd]);
 
-  useEffect(()=>{
-    let items = JSON.parse(localStorage.getItem('purchas'));
-    setPurchasItem(items)
-     let totalPrice = items.reduce((acc,curr)=>{
-       return acc + curr.price
-     },0)
-     setTotalPrice(totalPrice)
-     console.warn(totalPrice)
-  },[])
-
-  
-
-
+  useEffect(() => {
+    let items = JSON.parse(localStorage.getItem("purchas"));
+    setPurchasItem(items);
+    let totalPrice = items.reduce((acc, curr) => {
+      return acc + curr.price;
+    }, 0);
+    setTotalPrice(totalPrice);
+    console.warn(totalPrice);
+  }, []);
 
   const customEventEnd = (time) => {
     if (time) {
@@ -132,7 +128,7 @@ const CheckoutPage = () => {
 
   return (
     <div className="event-conatiner">
-      <h4 style={{color:'#BFDB38'}}>
+      <h4 style={{ color: "#BFDB38" }}>
         {eventDuration !== "" &&
           eventStart !== "" &&
           eventEnd !== "" &&
@@ -164,22 +160,26 @@ const CheckoutPage = () => {
           </LocalizationProvider>
         </div>
       </section>
-      <h4>Set Up Timimg</h4>
-      <section className="setupContainer">
-        <div>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <MobileDateTimePicker
-              value={setuptime}
-              label="Set time"
-              minDateTime={dayjs(eventStart)}
-              maxDateTime={dayjs(eventEnd)}
-              onChange={(newValue) => {
-                setSettimeup(newValue?.toISOString());
-              }}
-            />
-          </LocalizationProvider>
-        </div>
-      </section>
+      {eventStart !== "" && eventEnd !== "" && (
+        <>
+          <h4>Set Up Timimg</h4>
+          <section className="setupContainer">
+            <div>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <MobileDateTimePicker
+                  value={setuptime}
+                  label="Set time"
+                  minDateTime={dayjs(eventStart)}
+                  maxDateTime={dayjs(eventEnd)}
+                  onChange={(newValue) => {
+                    setSettimeup(newValue?.toISOString());
+                  }}
+                />
+              </LocalizationProvider>
+            </div>
+          </section>
+        </>
+      )}
 
       <h4>Choose Your Location</h4>
       <section className="userloc">
@@ -217,13 +217,19 @@ const CheckoutPage = () => {
       </section>
 
       <section className="paybtn">
-        <button onClick={() => PayemntData()}>Pay ${totalPrice} ({purchasItem.length} item )</button>
+        <button onClick={() => PayemntData()}>
+          Pay ${totalPrice} ({purchasItem.length} item )
+        </button>
       </section>
 
       <section className="paybtn">
-        <button style={{backgroundColor:'lightgray',color:'black'}} onClick={() => navigate('/gamelist')}>Back to Games</button>
+        <button
+          style={{ backgroundColor: "lightgray", color: "black" }}
+          onClick={() => navigate("/gamelist")}
+        >
+          Back to Games
+        </button>
       </section>
-
 
       {/* {console.log(transPrice)}
       <div>Transport Price - {transPrice}</div> */}
